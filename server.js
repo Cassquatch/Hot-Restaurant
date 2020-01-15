@@ -11,8 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //route handling
-app.get("/api/tables", (req, res) => {
+app.get("/tables", (req, res) => {
     res.sendFile(path.join(__dirname, "tables.html"));
+
+
 });
 
 app.get("/", (req, res) => {
@@ -23,7 +25,17 @@ app.get("/api/reservation", (req, res) => {
     res.sendFile(path.join(__dirname, "reservation.html"));
 });
 
+app.get("/api/tables", (req, res) => {
+    fs.readFile("./tables.JSON", (err, data) => {
+        if(err) throw err;
 
+        res.json(data);
+    });
+
+    fs.readFile("/api/tables", (err, data) => {
+        res.json(data);
+    });
+});
 
 
 app.post("/api/tables", (req, res) => {
