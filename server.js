@@ -34,6 +34,23 @@ app.post("/api/tables", (req, res) => {
 
     res.status(204).send();
 
+    fs.readFile("./tables.JSON", (err, data) => {
+        if(err) throw err;
+        let data_object = JSON.parse(data);
+        console.log(data_object);
+        if(data_object.length < 5){
+            fs.writeFile("./tables.JSON",  JSON.stringify(req_body), () => {
+                console.log("file written");
+            });
+        }
+        if(data_object.length > 5){
+
+            fs.writeFile("./waitlist.JSON", JSON.stringify(req_body), () => {
+                console.log("waitlist written");
+            });
+        }
+    })
+
 
 });
 
