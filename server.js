@@ -32,7 +32,7 @@ app.post("/api/tables", (req, res) => {
     
     console.log(req_body);
 
-    res.stats(204).send();
+    res.status(204).send();
 
 
 });
