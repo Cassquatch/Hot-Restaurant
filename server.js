@@ -1,5 +1,6 @@
 const fs = require("fs");
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
@@ -10,16 +11,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //route handling
+app.get("/api/tables", (req, res) => {
+    res.sendFile(path.join(__dirname, "tables.html"));
+});
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "home.html"));
+});
+
+app.get("/api/reservation", (req, res) => {
+    res.sendFile(path.join(__dirname, "reservation.html"));
+});
+
+
+
+
 app.post("/api/tables", (req, res) => {
     const req_body = req.body;
 
     
-    fs.readFile("./tables.JSON", (err, data) => {
-        if(err) throw err;
+    console.log(req_body);
 
-        let tables_str = JSON.stringify(data);
-        console.log(tables_str);
-    })
+    res.stats(204).send();
 
 
 });
