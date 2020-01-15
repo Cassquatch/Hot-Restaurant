@@ -29,12 +29,14 @@ app.get("/api/tables", (req, res) => {
     fs.readFile("./tables.JSON", (err, data) => {
         if(err) throw err;
 
-        res.json(data);
+        res.json(JSON.parse(data));
     });
 
-    fs.readFile("/api/tables", (err, data) => {
-        res.json(data);
+    fs.readFile("./waitlist.JSON", (err, data) => {
+        if(err) throw err;
+        res.json(JSON.parse(data));
     });
+   
 });
 
 
@@ -42,14 +44,14 @@ app.post("/api/tables", (req, res) => {
     const req_body = req.body;
 
     
-    console.log(req_body);
+   
 
     res.status(204).send();
 
     fs.readFile("./tables.JSON", (err, data) => {
         if(err) throw err;
         let data_object = JSON.parse(data);
-        console.log(data_object);
+        
         if(data_object.length < 5){
             fs.writeFile("./tables.JSON",  JSON.stringify(req_body), () => {
                 console.log("file written");
@@ -61,7 +63,8 @@ app.post("/api/tables", (req, res) => {
                 console.log("waitlist written");
             });
         }
-    })
+      
+    });
 
 
 });
