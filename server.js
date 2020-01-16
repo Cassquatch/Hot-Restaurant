@@ -26,15 +26,14 @@ app.get("/api/reservation", (req, res) => {
 });
 
 app.get("/api/tables", (req, res) => {
-    fs.readFile("./tables.JSON", (err, data) => {
-        if(err) throw err;
 
-        res.json(data);
-    });
 
-    fs.readFile("/api/tables", (err, data) => {
-        res.json(data);
-    });
+        res.json(tables.JSON);
+   
+
+    // fs.readFile("/api/tables", (err, data) => {
+    //     res.json(data);
+    // });
 });
 
 
@@ -42,20 +41,20 @@ app.post("/api/tables", (req, res) => {
     const req_body = req.body;
 
     
-    console.log(req_body);
+    // console.log(req_body);
 
     res.status(204).send();
 
-    fs.readFile("./tables.JSON", (err, data) => {
+    fs.readFile("tables_data.js", (err, data) => {
         if(err) throw err;
         let data_object = JSON.parse(data);
-        console.log(data_object);
+        // console.log(data_object);
         if(data_object.length < 5){
-            fs.writeFile("./tables.JSON",  JSON.stringify(req_body), () => {
+            fs.writeFile("tables_data.js",  JSON.stringify(req_body), () => {
                 console.log("file written");
             });
         }
-        if(data_object.length > 5){
+        if(data_object.length >= 5){
 
             fs.writeFile("./waitlist.JSON", JSON.stringify(req_body), () => {
                 console.log("waitlist written");
